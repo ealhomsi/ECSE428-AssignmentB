@@ -9,3 +9,5 @@ This is a test automation for a user story related to sending an email using gma
 # contributors
 - Elias Al Homsi
 - Aljulanda Al Abri
+
+# check travis
