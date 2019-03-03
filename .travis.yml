@@ -1,0 +1,6 @@
+addons: # get google-chrome-stable
+  chrome: stable
+
+script:
+  - npm install
+  - npm run test:chrome
