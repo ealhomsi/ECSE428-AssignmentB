@@ -3,4 +3,4 @@ addons: # get google-chrome-stable
 
 script:
   - npm install
-  - npm run test:chrome
+  - npm run test
