@@ -57,11 +57,14 @@ When(/^I attach an image$/, async () => {
   await client
   .useXpath().click("//div[@data-tooltip='Insert photo']")
   .useXpath().waitForElementPresent("//iframe[contains(@src, 'https://docs.google.com/picker?protocol=gadgets')]", 10000)
-  .pause(1000)
+  //give time for the frame to be avialble
+  .pause(5000)
   .getAttribute("//iframe[contains(@src, 'https://docs.google.com/picker?protocol=gadgets')]", 'id', (result) => {
-      client
-        .frame(null)
-        .frame(result.value)
+    console.log(result.value)
+    client
+      .useXpath().waitForElementVisible("//iframe[contains(@src, 'https://docs.google.com/picker?protocol=gadgets')]", 10000)
+      .frame(null)
+      .frame({ELEMENT: result.value.ELEMENT})
   });
 });
 
