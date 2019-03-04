@@ -4,15 +4,15 @@ import { Given, Then, When } from 'cucumber';
 Given(/^I am on the Gmail login page$/, async () => {
   await client
     .url('https://accounts.google.com/ServiceLogin/identifier?service=mail')
-    .waitForElementVisible('body', 1000)
+    .pause(3000)
     .assert.visible('input[name=identifier]');
 });
 
 Given(/^I am in inbox$/, async () => {
   await client
   .url('https://mail.google.com/mail/#inbox')
-  .waitForElementVisible('body', 10000)
-  .assert.containsText('body', 'Compose');
+  .pause(3000)
+  .assert.containsText('html', 'Compose');
 });
 
 
@@ -29,7 +29,7 @@ When(/^I enter my credentials$/, async () => {
 
 Then(/^I get to my Inbox section of the Gmail website$/, async () => {
   await client
-  .waitForElementVisible('body', 5000)
+  .pause(3000)
   .url(function(result) {
       this.assert.equal(result.value, 'https://mail.google.com/mail/#inbox', 'Url is what we expect');
     })
@@ -38,7 +38,7 @@ Then(/^I get to my Inbox section of the Gmail website$/, async () => {
 
 When(/^I click Compose$/, async () => {
   await client
-  .waitForElementVisible('body', 5000)
+  .pause(3000)
   .useXpath().click("//div[contains(text(),'Compose')]")
   .pause(1000)
 });
@@ -100,7 +100,7 @@ Then(/^the email with title "(.*?)" shouldn't exist in the sent emails$/, async 
   .url('https://mail.google.com/mail/#sent')
   .refresh()
   .pause(3000)
-  .expect.element('#main').text.to.not.contain(subject)
+  .expect.element('html').text.to.not.contain(subject)
 });
 
 
