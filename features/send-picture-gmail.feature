@@ -19,3 +19,13 @@ Scenario: Sending an email
   And I press the send button
   Then the email with title "some title" should exist in the sent emails
 
+Scenario: Sending an email with wrong email address
+  Given I am in inbox
+  When I click Compose
+  And I write an email address "elias988.alhomsi@mail.mcgill.ca" in the recipient field of the compose section
+  And I write "some title" in the subject field
+  And I write "some message" in the email body field
+  And I attach an image
+  And I press the send button
+  Then the email with title "some title" shouldn't exist in the sent emails
+

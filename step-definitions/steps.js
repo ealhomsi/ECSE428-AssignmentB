@@ -8,6 +8,14 @@ Given(/^I am on the Gmail login page$/, async () => {
     .assert.visible('input[name=identifier]');
 });
 
+Given(/^I am in inbox$/, async () => {
+  await client
+  .url('https://mail.google.com/mail/#inbox')
+  .waitForElementVisible('body', 10000)
+  .assert.containsText('body', 'Compose');
+});
+
+
 When(/^I enter my credentials$/, async () => {
   await client
   .assert.visible('input[name=identifier]')
@@ -84,4 +92,15 @@ Then(/^the email with title "(.*?)" should exist in the sent emails$/, async (su
   .pause(1000)
   .useXpath().click('//div[@data-tooltip="Delete"]')
 });
+
+Then(/^the email with title "(.*?)" shouldn't exist in the sent emails$/, async (subject) => {
+  await client
+  //wait for gmail to add the new email
+  .pause(1000)
+  .url('https://mail.google.com/mail/#sent')
+  .refresh()
+  .pause(3000)
+  .expect.element('#main').text.to.not.contain(subject)
+});
+
 
