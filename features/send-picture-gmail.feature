@@ -1,6 +1,7 @@
 Feature: SendPictureGmail
 This feature would test that a user is able to send a picture
 using gmail and then find that picture in the sent folder.
+Please note you can change the email and title and body by changing the text within quotes "<param>"
 
 Scenario: Logging in to Gmail
 
@@ -11,10 +12,10 @@ Scenario: Logging in to Gmail
 Scenario: Sending an email
   Given I get to my Inbox section of the Gmail website
   When I click Compose
-  And I write an email address in the recipient field of the compose section
-  And I write a title in the subject field
-  And I write a message in the email body field
+  And I write an email address "elias.alhomsi@mail.mcgill.ca" in the recipient field of the compose section
+  And I write "some title" in the subject field
+  And I write "some message" in the email body field
   And I attach an image
-  And  I press the send button
-  Then the email that I sent should exist in the sent emails section of the Gmail webpage
+  And I press the send button
+  Then the email with title "some title" should exist in the sent emails
 

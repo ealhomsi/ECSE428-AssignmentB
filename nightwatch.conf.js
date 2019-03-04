@@ -5,7 +5,6 @@ const ieDriver = require('iedriver');
 const edgeDriver = require('edgedriver');
 
 module.exports = {
-  custom_assertions_path: 'custom-assertions',
   test_settings: {
     default: {
       selenium: {

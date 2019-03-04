@@ -35,21 +35,22 @@ When(/^I click Compose$/, async () => {
   .pause(1000)
 });
 
-When(/^I write an email address in the recipient field of the compose section$/, async () => {
+When(/^I write an email address "(.*?)" in the recipient field of the compose section$/, async (email) => {
   await client
-  .useXpath().setValue("//textarea[@name='to']", 'elias.alhomsi@mail.mcgill.ca')
+  .waitForElementPresent("//textarea[@name='to']",3000)
+  .useXpath().setValue("//textarea[@name='to']", email)
   .pause(1000);
 });
 
-When(/^I write a title in the subject field$/, async () => {
+When(/^I write "(.*?)" in the subject field$/, async (subject) => {
   await client
-  .useXpath().setValue("//input[@name='subjectbox']", 'a title')
+  .useXpath().setValue("//input[@name='subjectbox']", subject)
   .pause(1000);
 });
 
-When(/^I write a message in the email body field$/, async () => {
+When(/^I write "(.*?)" in the email body field$/, async (body) => {
   await client
-  .useXpath().setValue("//div[@aria-label='Message Body']", 'hey I missed you')
+  .useXpath().setValue("//div[@aria-label='Message Body']", body)
   .pause(1000);
 });
 
@@ -59,12 +60,24 @@ When(/^I attach an image$/, async () => {
   .useXpath().waitForElementPresent("//iframe[contains(@src, 'https://docs.google.com/picker?protocol=gadgets')]", 10000)
   //give time for the frame to be avialble
   .pause(5000)
-  .getAttribute("//iframe[contains(@src, 'https://docs.google.com/picker?protocol=gadgets')]", 'id', (result) => {
-    console.log(result.value)
-    client
-      .useXpath().waitForElementVisible("//iframe[contains(@src, 'https://docs.google.com/picker?protocol=gadgets')]", 10000)
-      .frame(null)
-      .frame({ELEMENT: result.value.ELEMENT})
-  });
+  //have to do the attaching manually
+  .useXpath().waitForElementNotPresent("//iframe[contains(@src, 'https://docs.google.com/picker?protocol=gadgets')]", 1000000)
+});
+
+When(/^I press the send button$/, async () => {
+  await client
+  .pause(1000)
+  .useXpath().click("//div[contains(@data-tooltip, 'Send')]")
+  .pause(1000)
+});
+
+Then(/^the email with title "(.*?)" should exist in the sent emails$/, async (subject) => {
+  await client
+  //wait for gmail to add the new email
+  .pause(1000)
+  .url('https://mail.google.com/mail/#sent')
+  .refresh()
+  .pause(3000)
+  .assert.containsText('html', subject)
 });
 
