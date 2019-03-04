@@ -79,5 +79,9 @@ Then(/^the email with title "(.*?)" should exist in the sent emails$/, async (su
   .refresh()
   .pause(3000)
   .assert.containsText('html', subject)
+  //clean all emails
+  .useXpath().click('//span[@role="checkbox"]')
+  .pause(1000)
+  .useXpath().click('//div[@data-tooltip="Delete"]')
 });
 
