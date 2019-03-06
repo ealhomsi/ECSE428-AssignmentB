@@ -18,3 +18,4 @@ Scenario: Sending to multiple recipients ALT
   And I attach an image
   And I press the send button
   Then the email with title "some title" and "some message" should exist in the sent emails
+  And restore the system to its original state

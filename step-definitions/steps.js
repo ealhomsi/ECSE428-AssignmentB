@@ -1,14 +1,15 @@
 import { client } from 'nightwatch-api';
 import { Given, Then, When } from 'cucumber';
 
+// This is checking that the system is in appropriate state before testing
 Given(/^I am on the Gmail login page$/, async () => {
   await client
     .url('https://accounts.google.com/ServiceLogin/identifier?service=mail')
     .waitForElementVisible('html', 5000)
+    .assert.containsText('html', 'Sign in')
     .isVisible('input[name=identifier]', result => {
       if(result.value){
         console.log("User Name to be entered")
-        console.log(result)
       }
     })
 });
@@ -97,17 +98,26 @@ Then(/^the email with title "(.*?)" and "(.*?)" should exist in the sent emails$
   .pause(3000)
   .assert.containsText('html', subject)
   .assert.containsText('html', message)
-  //clean all emails
-  .useXpath().click('//span[@role="checkbox"]')
-  .pause(1000)
-  .useXpath().click('//div[@data-tooltip="Delete"]')
-  .pause(1000)
-  //log out
-  .useXpath().click('//span[@class="gb_ya gbii"]')
-  .pause(1000)
-  .useXpath().click('//a[@id="gb_71"]')
-  .deleteCookies(function(){//restore system to original state
-    console.log("NO COOKIES")
-  })
 });
 
+Then(/^restore the system to its original state$/, async () => {
+  await client
+  //clean all emails
+  // DELTE THE SECONDS PAUSES THEY ARE NOT ALLOWED
+  .useXpath().waitForElementPresent('//span[@role="checkbox"]', 10000)
+  .useXpath().click('//span[@role="checkbox"]')
+  
+  .useXpath().waitForElementPresent('//div[@data-tooltip="Delete"]', 10000)
+  .useXpath().click('//div[@data-tooltip="Delete"]')
+  
+  //log out
+  .useXpath().waitForElementPresent('//span[@class="gb_ya gbii"]', 10000)
+  .useXpath().click('//span[@class="gb_ya gbii"]')
+  
+  .useXpath().waitForElementPresent('//a[@id="gb_71"]', 10000)
+  .useXpath().click('//a[@id="gb_71"]')
+
+  .deleteCookies(function(){//restore system to original state
+    console.log("Cookies deleted")
+  })
+});
