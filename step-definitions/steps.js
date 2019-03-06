@@ -10,7 +10,7 @@ Given(/^I am on the Gmail login page$/, async () => {
     .assert.containsText('html', 'Sign in')
 });
 
-When(/^I enter my credentials$/, async () => {
+Given(/^I enter my credentials$/, async () => {
   await client
   .assert.visible('input[name=identifier]')
   .setValue('input[name=identifier]', 'testuserecse428@gmail.com')
@@ -30,7 +30,7 @@ Given(/^I am in inbox$/, async () => {
 });
 
 
-Then(/^I get to my Inbox section of the Gmail website$/, async () => {
+Given(/^I get to my Inbox section of the Gmail website$/, async () => {
   await client
   .waitForElementVisible('html', 5000)
   .url(function(result) {
@@ -119,3 +119,20 @@ Then(/^restore the system to its original state$/, async () => {
     console.log("Cookies deleted")
   })
 });
+
+Then(/^log out$/, async () => {
+  await client  
+  //log out
+  .pause(1000)
+  .useXpath().waitForElementPresent('//span[@class="gb_ya gbii"]', 10000)
+  .useXpath().click('//a[@class="gb_ya gbii"]')
+  
+  .useXpath().waitForElementPresent('//a[@id="gb_71"]', 10000)
+  .useXpath().click('//a[@id="gb_71"]')
+
+  .deleteCookies(function(){//restore system to original state
+    console.log("Cookies deleted")
+  })
+});
+
+
