@@ -5,27 +5,20 @@ import { Given, Then, When } from 'cucumber';
 Given(/^I am on the Gmail login page$/, async () => {
   await client
     .url('https://accounts.google.com/ServiceLogin/identifier?service=mail')
-    .waitForElementVisible('html', 5000)
+    .waitForElementVisible('body', 1000)
+    .assert.visible('input[name=identifier]')
     .assert.containsText('html', 'Sign in')
-    .isVisible('input[name=identifier]', result => {
-      if(result.value){
-        console.log("User Name to be entered")
-      }
-    })
 });
 
 When(/^I enter my credentials$/, async () => {
   await client
-  .isVisible('input[name=identifier]', result => {
-    if(result.value){
-      client.setValue('input[name=identifier]', 'testuserecse428@gmail.com')
-      client.click('#identifierNext')
-    }
-  })
-  .pause(1000)
-  .assert.visible('input[name=password]')
-  .setValue('input[name=password]', 'iloveassignmentb')
-  .click('#passwordNext');
+  .assert.visible('input[name=identifier]')
+  .setValue('input[name=identifier]', 'testuserecse428@gmail.com')
+    .click('#identifierNext')
+    .pause(1000)
+    .assert.visible('input[name=password]')
+    .setValue('input[name=password]', 'iloveassignmentb')
+    .click('#passwordNext');
 });
 
 Given(/^I am in inbox$/, async () => {
