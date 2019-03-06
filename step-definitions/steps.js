@@ -100,6 +100,11 @@ Then(/^the email with title "(.*?)" and "(.*?)" should exist in the sent emails$
   .assert.containsText('html', message)
 });
 
+Then(/^an alert will show$/, async () => {
+  await client
+  .assert.containsText('html', 'Please specify at least one recipient.')
+});
+
 Then(/^restore the system to its original state$/, async () => {
   await client
   //clean all emails
