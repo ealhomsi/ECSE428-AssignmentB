@@ -96,6 +96,8 @@ Then(/^the email with title "(.*?)" and "(.*?)" should exist in the sent emails$
 Then(/^an alert will show$/, async () => {
   await client
   .assert.containsText('html', 'Please specify at least one recipient.')
+  .useXpath().waitForElementPresent('//button[@name="ok"]', 10000)
+  .useXpath().click('//button[@name="ok"]')
 });
 
 Then(/^restore the system to its original state$/, async () => {
@@ -120,12 +122,11 @@ Then(/^restore the system to its original state$/, async () => {
   })
 });
 
-Then(/^log out$/, async () => {
-  await client  
+Then(/^restore system$/, async () => {
+  await client
   //log out
-  .pause(1000)
   .useXpath().waitForElementPresent('//span[@class="gb_ya gbii"]', 10000)
-  .useXpath().click('//a[@class="gb_ya gbii"]')
+  .useXpath().click('//span[@class="gb_ya gbii"]')
   
   .useXpath().waitForElementPresent('//a[@id="gb_71"]', 10000)
   .useXpath().click('//a[@id="gb_71"]')

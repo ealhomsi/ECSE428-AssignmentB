@@ -39,3 +39,4 @@ Scenario: Sending an email
   And I attach an image
   And I press the send button
   Then an alert will show
+  And restore system
