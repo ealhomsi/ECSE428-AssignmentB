@@ -1,6 +1,44 @@
 import { client } from 'nightwatch-api';
 import { Given, Then, When } from 'cucumber';
 
+/////////////// NEW METHODS ///////////
+Given(/^I am logged into gmail with my valid credentials$/, async () => {
+  await client
+    .url('https://accounts.google.com/ServiceLogin/identifier?service=mail')
+    .waitForElementVisible('body', 1000)
+    .assert.visible('input[name=identifier]')
+    .assert.containsText('html', 'Sign in')
+    .assert.visible('input[name=identifier]')
+    .setValue('input[name=identifier]', 'testuserecse428@gmail.com')
+    .click('#identifierNext')
+    .pause(1000)
+    .assert.visible('input[name=password]')
+    .setValue('input[name=password]', 'iloveassignmentb')
+    .click('#passwordNext')
+    .waitForElementVisible('html', 5000)
+    .url(function(result) {
+        this.assert.equal(result.value, 'https://mail.google.com/mail/#inbox', 'Url is what we expect');
+      })
+    .assert.containsText('html', 'Compose');
+});
+
+When(/^I send an email to "(.*?)" with title "(.*?)" and body "(.*?)"$/, async (email, subject, message) => {
+  await client
+  .useXpath().click("//div[contains(text(),'Compose')]")
+
+  .waitForElementPresent("//textarea[@name='to']",3000)
+  .useXpath().setValue("//textarea[@name='to']", email)
+
+  .waitForElementPresent("//input[@name='subjectbox']",3000)
+  .useXpath().setValue("//input[@name='subjectbox']", subject)
+
+  .waitForElementPresent("//div[@aria-label='Message Body']",3000)
+  .useXpath().setValue("//div[@aria-label='Message Body']", message)
+
+  .useXpath().click("//div[contains(@data-tooltip, 'Send')]")
+  .pause(2000)
+});
+/////////////// NEW METHODS ///////////
 // This is checking that the system is in appropriate state before testing
 Given(/^I am on the Gmail login page$/, async () => {
   await client
@@ -91,6 +129,7 @@ Then(/^the email with title "(.*?)" and "(.*?)" should exist in the sent emails$
   .pause(3000)
   .assert.containsText('html', subject)
   .assert.containsText('html', message)
+  //.useXpath().click('//table[@class="F cf zt"]/tbody/tr[1]')
 });
 
 Then(/^an alert will show$/, async () => {
@@ -122,6 +161,7 @@ Then(/^restore the system to its original state$/, async () => {
   })
 });
 
+// The previous function deletes emails before restoring the system 
 Then(/^restore system$/, async () => {
   await client
   //log out
@@ -135,5 +175,3 @@ Then(/^restore system$/, async () => {
     console.log("Cookies deleted")
   })
 });
-
-
