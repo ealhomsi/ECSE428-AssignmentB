@@ -3,12 +3,23 @@ This feature would test that a user is able to send a picture
 using gmail and then find that picture in the sent folder.
 Please note you can change the email and title and body by changing the text within quotes "<param>"
 
-Scenario: Email sending NEW WITHOUT NAV
+Scenario: NORMAL Email sending NEW WITHOUT NAV
   Given I am logged into gmail with my valid credentials
   When I send an email to "al.julanda.om@gmail.com" with title "some title" and body "some message"
   Then the email with title "some title" and "some message" should exist in the sent emails
   And restore the system to its original state
 
+Scenario: ALTERANTIVE Mutliple email sending NEW WITHOUT NAV
+  Given I am logged into gmail with my valid credentials
+  When I send an email to "aljulanda.alabri@mail.mcgill.ca , al.julanda.om@gmail.com," with title "some title" and body "some message"
+  Then the email with title "some title" and "some message" should exist in the sent emails
+  And restore the system to its original state
+
+Scenario: ERROR email with no recipient NEW WITHOUT NAV
+  Given I am logged into gmail with my valid credentials
+  When I send an email to "" with title "some title" and body "some message"
+  Then an alert will show
+  And restore system
 
 Scenario: Sending an email
   Given I am on the Gmail login page

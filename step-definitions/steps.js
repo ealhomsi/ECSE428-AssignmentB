@@ -25,7 +25,7 @@ Given(/^I am logged into gmail with my valid credentials$/, async () => {
 When(/^I send an email to "(.*?)" with title "(.*?)" and body "(.*?)"$/, async (email, subject, message) => {
   await client
   .useXpath().click("//div[contains(text(),'Compose')]")
-
+  
   .waitForElementPresent("//textarea[@name='to']",3000)
   .useXpath().setValue("//textarea[@name='to']", email)
 
