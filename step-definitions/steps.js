@@ -1,6 +1,7 @@
 import { client } from 'nightwatch-api';
 import { Given, Then, When } from 'cucumber';
 
+var users
 /////////////// NEW METHODS ///////////
 Given(/^I am logged into gmail with my valid credentials$/, async () => {
   await client
@@ -22,22 +23,68 @@ Given(/^I am logged into gmail with my valid credentials$/, async () => {
     .assert.containsText('html', 'Compose');
 });
 
-When(/^I send an email to "(.*?)" with title "(.*?)" and body "(.*?)"$/, async (email, subject, message) => {
-  await client
-  .useXpath().click("//div[contains(text(),'Compose')]")
+When(/^I send an email to the following list$/, async (table) => {
   
-  .waitForElementPresent("//textarea[@name='to']",3000)
-  .useXpath().setValue("//textarea[@name='to']", email)
-
-  .waitForElementPresent("//input[@name='subjectbox']",3000)
-  .useXpath().setValue("//input[@name='subjectbox']", subject)
-
-  .waitForElementPresent("//div[@aria-label='Message Body']",3000)
-  .useXpath().setValue("//div[@aria-label='Message Body']", message)
-
-  .useXpath().click("//div[contains(@data-tooltip, 'Send')]")
-  .pause(2000)
+  users = table.rawTable
+  for(var x = 0; x< users.length; x++){
+    var email = users[x][0]
+    var subject = users[x][1]
+    var message = users[x][2]
+    await client
+    .useXpath().click("//div[contains(text(),'Compose')]")
+  
+    .waitForElementPresent("//textarea[@name='to']",3000)
+    .pause(100)
+    .useXpath().setValue("//textarea[@name='to']", String(email))
+  
+    .waitForElementPresent("//input[@name='subjectbox']",3000)
+    .useXpath().setValue("//input[@name='subjectbox']", String(subject))
+  
+    .waitForElementPresent("//div[@aria-label='Message Body']",3000)
+    .useXpath().setValue("//div[@aria-label='Message Body']", String(message))
+  
+    // ATTACH AN IMAGE HERE
+    .useXpath().click("//div[contains(@data-tooltip, 'Send')]")
+    .pause(1000)  
+  }
 });
+
+When(/^I send an email to "(.*?)" with title "(.*?)" and body "(.*?)"$/, async (email, subject, message) => {
+    await client
+    .useXpath().click("//div[contains(text(),'Compose')]")
+  
+    .waitForElementPresent("//textarea[@name='to']",3000)
+    .useXpath().setValue("//textarea[@name='to']", email)
+  
+    .waitForElementPresent("//input[@name='subjectbox']",3000)
+    .useXpath().setValue("//input[@name='subjectbox']", subject)
+  
+    .waitForElementPresent("//div[@aria-label='Message Body']",3000)
+    .useXpath().setValue("//div[@aria-label='Message Body']", message)
+  
+    // ATTACH AN IMAGE HERE
+    .useXpath().click("//div[contains(@data-tooltip, 'Send')]")
+    .pause(1000)  
+});
+
+
+Then(/^the emails sent above should be present$/, async () => {
+  await client
+  .url('https://mail.google.com/mail/#sent')
+  .pause(2000)
+  for(var x = 0; x<users.length; x++){
+    var subject = users[x][1]
+    var message = users[x][2]
+    await client
+    //wait for gmail to add the new email
+    .refresh()
+    .pause(3000)
+    .assert.containsText('html', String(subject))
+    .assert.containsText('html', String(message))
+  }
+});
+
+
 /////////////// NEW METHODS ///////////
 // This is checking that the system is in appropriate state before testing
 Given(/^I am on the Gmail login page$/, async () => {
@@ -58,15 +105,6 @@ Given(/^I enter my credentials$/, async () => {
     .setValue('input[name=password]', 'iloveassignmentb')
     .click('#passwordNext');
 });
-
-Given(/^I am in inbox$/, async () => {
-  await client
-  //wait for gmail to add the new email
-  .pause(1000)
-  .url('https://mail.google.com/mail/#sent')
-  .refresh()
-});
-
 
 Given(/^I get to my Inbox section of the Gmail website$/, async () => {
   await client
@@ -123,7 +161,6 @@ When(/^I press the send button$/, async () => {
 Then(/^the email with title "(.*?)" and "(.*?)" should exist in the sent emails$/, async (subject, message) => {
   await client
   //wait for gmail to add the new email
-  .pause(1000)
   .url('https://mail.google.com/mail/#sent')
   .refresh()
   .pause(3000)
@@ -143,7 +180,7 @@ Then(/^restore the system to its original state$/, async () => {
   await client
   //clean all emails
   // DELTE THE SECONDS PAUSES THEY ARE NOT ALLOWED
-  .useXpath().waitForElementPresent('//span[@role="checkbox"]', 10000)
+  .useXpath().waitForElementPresent('//span[@role="checkbox"]', 1000)
   .useXpath().click('//span[@role="checkbox"]')
   
   .useXpath().waitForElementPresent('//div[@data-tooltip="Delete"]', 10000)

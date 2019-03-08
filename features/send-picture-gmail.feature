@@ -5,8 +5,11 @@ Please note you can change the email and title and body by changing the text wit
 
 Scenario: NORMAL Email sending NEW WITHOUT NAV
   Given I am logged into gmail with my valid credentials
-  When I send an email to "al.julanda.om@gmail.com" with title "some title" and body "some message"
-  Then the email with title "some title" and "some message" should exist in the sent emails
+  When I send an email to the following list
+    | al.julanda.om@gmail.com            | subject1 | body1 |
+    | aljulanda.alabri@mail.mcgill.ca    | subject2 | body2 |
+    | al-julanda.om@hotmail.com          | subject3 | body3 |
+  Then the emails sent above should be present
   And restore the system to its original state
 
 Scenario: ALTERANTIVE Mutliple email sending NEW WITHOUT NAV
