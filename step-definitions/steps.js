@@ -42,10 +42,12 @@ When(/^I send an email to the following list$/, async (table) => {
   
     .waitForElementPresent("//div[@aria-label='Message Body']",3000)
     .useXpath().setValue("//div[@aria-label='Message Body']", String(message))
-  
+    
     // ATTACH AN IMAGE HERE
+    //.useXpath().click("//div[@data-tooltip='Insert photo']")
+    //.useXpath().click("//img[@alt='image1.jpeg']")
     .useXpath().click("//div[contains(@data-tooltip, 'Send')]")
-    .pause(1000)  
+    .pause(1000) 
   }
 });
 
@@ -68,7 +70,7 @@ When(/^I send an email to "(.*?)" with title "(.*?)" and body "(.*?)"$/, async (
 });
 
 
-Then(/^the emails sent above should be present$/, async () => {
+Then(/^the emails sent above should be present in the sent folder with their respective parameters$/, async () => {
   await client
   .url('https://mail.google.com/mail/#sent')
   .pause(2000)
@@ -77,12 +79,26 @@ Then(/^the emails sent above should be present$/, async () => {
     var message = users[x][2]
     await client
     //wait for gmail to add the new email
-    .refresh()
+    if(x===1){
+      client.refresh()
+    }
+    await client
     .pause(3000)
     .assert.containsText('html', String(subject))
     .assert.containsText('html', String(message))
   }
 });
+
+Then(/^the email with title "(.*?)" and body "(.*?)" doesn't exist in the sent folder$/, async (subject, message) => {
+  await client
+  //wait for gmail to add the new email
+  .url('https://mail.google.com/mail/#sent')
+  .refresh()
+  .pause(3000)
+  .verify.containsText('html', String(subject))
+  .verify.containsText('html', String(message))
+});
+
 
 
 /////////////// NEW METHODS ///////////
