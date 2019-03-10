@@ -1,0 +1,123 @@
+Aljulandas-MacBook-Pro:ECSE428-AssignmentB Aljulanda$ npm run test:firefox
+
+> nightwatch-api-cucumber@1.0.0 test:firefox /Users/Aljulanda/Desktop/McGill/ECSE 428/ECSE428-AssignmentB
+> cross-env browser=firefox npm test
+
+
+> nightwatch-api-cucumber@1.0.0 test /Users/Aljulanda/Desktop/McGill/ECSE 428/ECSE428-AssignmentB
+> cucumber-js --require-module babel-core/register --require cucumber.conf.js --require step-definitions --format node_modules/cucumber-pretty
+
+Feature: SendPictureGmail
+
+  Scenario: NORMAL Send email with images
+    Given I am logged into gmail with my valid credentials
+✔ Element <body> was visible after 63 milliseconds.
+✔ Testing if element <input[name=identifier]> is visible  - 71 ms.
+✔ Testing if element <html> contains text: "Sign in"  - 343 ms.
+✔ Testing if element <input[name=identifier]> is visible  - 38 ms.
+✔ Testing if element <input[name=password]> is visible  - 75 ms.
+✔ Element <html> was visible after 308 milliseconds.
+✔ Passed [equal]: Url is what we expect
+✔ Testing if element <html> contains text: "Compose"  - 1440 ms.
+    When I send an email to the following list
+      │ al.julanda.om@gmail.com         │ subject1 │ body1 │ https://bit.ly/2MQhVaw │
+      │ aljulanda.alabri@mail.mcgill.ca │ subject2 │ body2 │ https://bit.ly/2ta41ab │
+      │ al-julanda.om@hotmail.com       │ subject3 │ body3 │ https://bit.ly/2CZG6zZ │
+      │ elias.alhomsi@mail.mcgill.ca    │ subject4 │ body4 │ https://bit.ly/2tVyTf1 │
+      │ me@aljulanda.com                │ subject5 │ body5 │ https://bit.ly/2wf1vlb │
+✔ Element <//textarea[@name='to']> was present after 1479 milliseconds.
+✔ Element <//input[@name='subjectbox']> was present after 67 milliseconds.
+✔ Element <//div[@aria-label='Message Body']> was present after 38 milliseconds.
+✔ Element <//textarea[@name='to']> was present after 109 milliseconds.
+✔ Element <//input[@name='subjectbox']> was present after 46 milliseconds.
+✔ Element <//div[@aria-label='Message Body']> was present after 48 milliseconds.
+✔ Element <//textarea[@name='to']> was present after 130 milliseconds.
+✔ Element <//input[@name='subjectbox']> was present after 38 milliseconds.
+✔ Element <//div[@aria-label='Message Body']> was present after 53 milliseconds.
+(node:1132) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 error listeners added. Use emitter.setMaxListeners() to increase limit
+✔ Element <//textarea[@name='to']> was present after 80 milliseconds.
+✔ Element <//input[@name='subjectbox']> was present after 14 milliseconds.
+✔ Element <//div[@aria-label='Message Body']> was present after 32 milliseconds.
+(node:1132) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 error listeners added. Use emitter.setMaxListeners() to increase limit
+✔ Element <//textarea[@name='to']> was present after 67 milliseconds.
+✔ Element <//input[@name='subjectbox']> was present after 38 milliseconds.
+✔ Element <//div[@aria-label='Message Body']> was present after 41 milliseconds.
+    Then the emails sent above should be present in the sent folder with their respective parameters
+Verifying subject1 and body1 and https://bit.ly/2MQhVaw exist in sent folder
+✔ Testing if element <html> contains text: "subject1"  - 1202 ms.
+✔ Testing if element <html> contains text: "body1"  - 1069 ms.
+✔ Testing if element <html> contains text: "https://bit.ly/2MQhVaw"  - 1201 ms.
+Verifying subject2 and body2 and https://bit.ly/2ta41ab exist in sent folder
+✔ Testing if element <html> contains text: "subject2"  - 852 ms.
+✔ Testing if element <html> contains text: "body2"  - 875 ms.
+✔ Testing if element <html> contains text: "https://bit.ly/2ta41ab"  - 857 ms.
+Verifying subject3 and body3 and https://bit.ly/2CZG6zZ exist in sent folder
+✔ Testing if element <html> contains text: "subject3"  - 1020 ms.
+✔ Testing if element <html> contains text: "body3"  - 908 ms.
+(node:1132) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 error listeners added. Use emitter.setMaxListeners() to increase limit
+✔ Testing if element <html> contains text: "https://bit.ly/2CZG6zZ"  - 866 ms.
+Verifying subject4 and body4 and https://bit.ly/2tVyTf1 exist in sent folder
+✔ Testing if element <html> contains text: "subject4"  - 905 ms.
+✔ Testing if element <html> contains text: "body4"  - 849 ms.
+✔ Testing if element <html> contains text: "https://bit.ly/2tVyTf1"  - 842 ms.
+Verifying subject5 and body5 and https://bit.ly/2wf1vlb exist in sent folder
+✔ Testing if element <html> contains text: "subject5"  - 837 ms.
+✔ Testing if element <html> contains text: "body5"  - 826 ms.
+✔ Testing if element <html> contains text: "https://bit.ly/2wf1vlb"  - 845 ms.
+    And restore the system to its original state
+✔ Element <//span[@role="checkbox"]> was present after 9 milliseconds.
+✔ Element <//div[@data-tooltip="Delete"]> was present after 22 milliseconds.
+✔ Element <//span[@class="gb_ya gbii"]> was present after 27 milliseconds.
+✔ Element <//a[@id="gb_71"]> was present after 25 milliseconds.
+Cookies deleted
+
+  Scenario: ALTERANTIVE Send an email with image to multiple recipients
+    Given I am logged into gmail with my valid credentials
+✔ Element <body> was visible after 58 milliseconds.
+✔ Testing if element <input[name=identifier]> is visible  - 65 ms.
+✔ Testing if element <html> contains text: "Sign in"  - 328 ms.
+✔ Testing if element <input[name=identifier]> is visible  - 53 ms.
+✔ Testing if element <input[name=password]> is visible  - 61 ms.
+✔ Element <html> was visible after 305 milliseconds.
+✔ Passed [equal]: Url is what we expect
+✔ Testing if element <html> contains text: "Compose"  - 1323 ms.
+    When I send an email to "aljulanda.alabri@mail.mcgill.ca , al.julanda.om@gmail.com," with title "some title" and body "some message \n image: https://bit.ly/2tVyTf1"
+✔ Element <//textarea[@name='to']> was present after 604 milliseconds.
+✔ Element <//input[@name='subjectbox']> was present after 39 milliseconds.
+✔ Element <//div[@aria-label='Message Body']> was present after 38 milliseconds.
+    Then the email with title "some title" and "some message" and "https://bit.ly/2tVyTf1" should exist in the sent emails
+✔ Testing if element <html> contains text: "some title"  - 923 ms.
+✔ Testing if element <html> contains text: "some message"  - 754 ms.
+✔ Testing if element <html> contains text: "https://bit.ly/2tVyTf1"  - 892 ms.
+    And restore the system to its original state
+✔ Element <//span[@role="checkbox"]> was present after 51 milliseconds.
+✔ Element <//div[@data-tooltip="Delete"]> was present after 64 milliseconds.
+✔ Element <//span[@class="gb_ya gbii"]> was present after 41 milliseconds.
+✔ Element <//a[@id="gb_71"]> was present after 38 milliseconds.
+Cookies deleted
+
+  Scenario: ERROR email with no recipient
+    Given I am logged into gmail with my valid credentials
+✔ Element <body> was visible after 64 milliseconds.
+✔ Testing if element <input[name=identifier]> is visible  - 65 ms.
+✔ Testing if element <html> contains text: "Sign in"  - 383 ms.
+✔ Testing if element <input[name=identifier]> is visible  - 56 ms.
+✔ Testing if element <input[name=password]> is visible  - 65 ms.
+✔ Element <html> was visible after 367 milliseconds.
+✔ Passed [equal]: Url is what we expect
+✔ Testing if element <html> contains text: "Compose"  - 1116 ms.
+    When I send an email to "" with title "ERR some title" and body "ERR some message \n https://bit.ly/2tVyTf1"
+✔ Element <//textarea[@name='to']> was present after 13 milliseconds.
+✔ Element <//input[@name='subjectbox']> was present after 11 milliseconds.
+✔ Element <//div[@aria-label='Message Body']> was present after 22 milliseconds.
+    Then an alert will show indicating the message can't be sent
+✔ Testing if element <html> contains text: "Please specify at least one recipient."  - 1808 ms.
+✔ Element <//button[@name="ok"]> was present after 36 milliseconds.
+    And restore system
+✔ Element <//span[@class="gb_ya gbii"]> was present after 71 milliseconds.
+✔ Element <//a[@id="gb_71"]> was present after 102 milliseconds.
+Cookies deleted
+
+3 scenarios (3 passed)
+12 steps (12 passed)
+2m48.411s

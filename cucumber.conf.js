@@ -12,11 +12,9 @@ AfterAll(async () => {
 });
 
 Before(async () => {
-  console.log("BEFFFORE")
   await createSession();
 });
 
 After(async () => {
-  console.log("AFTER")
   await closeSession();
 });
