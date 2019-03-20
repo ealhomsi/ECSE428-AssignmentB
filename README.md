@@ -1,13 +1,14 @@
 # ECSE428-AssignmentB
 This is a test automation for a user story related to sending an email using gmail
 
-# Setup
+## Setup
 - do npm install
 - test it using your favorite webbrowser npm run test:firefox
 - done!
 
-# contributors
+## contributors
 - Elias Al Homsi
 - Aljulanda Al Abri
 
-# check travis
+## To Do
+- Check travis
